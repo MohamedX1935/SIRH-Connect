@@ -1,0 +1,24 @@
+stages:
+  - build
+  - test
+  - deploy
+
+backend-build:
+  stage: build
+  image: maven:3.9.6-eclipse-temurin-17
+  script:
+    - mvn -f backend/pom.xml -q package
+
+frontend-build:
+  stage: build
+  image: node:18
+  script:
+    - cd frontend
+    - npm install
+    - npm run build
+
+deploy:
+  stage: deploy
+  script:
+    - echo "Deploy step"
+  when: manual
